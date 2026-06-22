@@ -1,0 +1,89 @@
+.industries-hero {
+  position: relative;
+  padding: 140px 0 80px;
+  overflow: hidden;
+  background: var(--gradient-hero);
+  border-bottom: 1px solid var(--border);
+}
+
+.industries-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.industries-hero-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.75;
+}
+
+.industries-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.industry-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.industry-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.industry-icon-cyan   { background: rgba(0,212,255,0.1);  border: 1px solid rgba(0,212,255,0.2); }
+.industry-icon-purple { background: rgba(124,111,255,0.1); border: 1px solid rgba(124,111,255,0.2); }
+.industry-icon-green  { background: rgba(0,232,135,0.1);  border: 1px solid rgba(0,232,135,0.2); }
+.industry-icon-amber  { background: rgba(255,176,32,0.1);  border: 1px solid rgba(255,176,32,0.2); }
+
+.industry-emoji { font-size: 1.8rem; }
+.industry-title { font-size: 1rem; font-weight: 600; }
+.industry-desc  { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; flex: 1; }
+
+.industry-usecases { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+
+.industry-usecase {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.usecase-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-cyan   { background: var(--accent-cyan); }
+.dot-purple { background: var(--accent-purple); }
+.dot-green  { background: var(--accent-green); }
+.dot-amber  { background: var(--accent-amber); }
+
+.industries-cta {
+  padding: 64px;
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .industries-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .industries-grid { grid-template-columns: 1fr; }
+  .industries-cta { padding: 40px 24px; }
+}
