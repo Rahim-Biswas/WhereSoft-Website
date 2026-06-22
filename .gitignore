@@ -143,3 +143,14 @@ vite.config.ts.timestamp-*
 .vite/
 
 
+backend/.venv
+backend/.env
+backend/venv
+backend/env
+
+.venv/
+.env/
+venv/
+env/
+
+wheresoft.db
