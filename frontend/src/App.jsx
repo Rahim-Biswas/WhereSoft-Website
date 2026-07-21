@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { AdminRoute } from './components/PrivateRoute';
+import ScrollToTop from './components/ScrollToTop';
 import './index.css';
 
 // Lazy-loaded pages
@@ -42,6 +43,8 @@ function Layout() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
   const isAuth  = location.pathname === '/login' || location.pathname === '/signup';
+  const isHome  = location.pathname === '/';
+  const isContact = location.pathname === '/contact';
 
   return (
     <>
@@ -89,6 +92,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Layout />
       </BrowserRouter>
     </AuthProvider>

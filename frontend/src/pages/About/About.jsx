@@ -1,6 +1,30 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup, LayersControl } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import { Navigation } from 'lucide-react';
 import './About.css';
+
+// Fix Leaflet default icon
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
+
+// Custom marker matching the design vibe
+const customIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const OFFICE = { lat: 17.532028009614812, lng: 78.38881943307665 };
 
 const TIMELINE = [
   { year: '2016', title: 'Founded', desc: 'WhereSoft was founded in Hyderabad with a vision to democratize geospatial technology for Indian organizations.' },
@@ -21,10 +45,10 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { name: 'Rahim Biswas', role: 'Founder & CEO', initials: 'RB', specialty: 'GIS Architecture & Strategy' },
-  { name: 'Priya Nair', role: 'Head of Engineering', initials: 'PN', specialty: 'Web GIS & Backend Systems' },
-  { name: 'Aditya Reddy', role: 'Lead GIS Analyst', initials: 'AR', specialty: 'Spatial Analytics & QGIS' },
-  { name: 'Sneha Kulkarni', role: 'Remote Sensing Expert', initials: 'SK', specialty: 'Satellite Imagery & Machine Learning' },
+  { name: 'Amzad Ali Khan', role: 'Founder & CEO', initials: 'AK', specialty: '' },
+  { name: 'Shaik Mubeena', role: 'Co-Founder', initials: 'SM', specialty: '' },
+  //{ name: 'Aditya Reddy', role: 'Lead GIS Analyst', initials: 'AR', specialty: 'Spatial Analytics & QGIS' },
+  //{ name: 'Sneha Kulkarni', role: 'Remote Sensing Expert', initials: 'SK', specialty: 'Satellite Imagery & Machine Learning' },
 ];
 
 export default function About() {
@@ -48,11 +72,11 @@ export default function About() {
           <div className="about-hero-content reveal">
             <div className="section-tag">About WhereSoft</div>
             <h1 className="about-hero-title">
-              The Science of<br /><span className="text-gradient">Where</span>
+              Spatial<br /><span className="text-gradient">Data Science</span>
             </h1>
             <p className="about-hero-desc">
-              WhereSoft Technologies is a Hyderabad-based geospatial technology company dedicated to building 
-              intelligent spatial solutions that transform how organizations understand and interact with their world.
+              WhereSoft Technologies is a Hyderabad based geospatial technology company dedicated to building
+              modern spatial solutions that transform how organizations understand and interact with their world.
             </p>
           </div>
         </div>
@@ -63,17 +87,17 @@ export default function About() {
         <div className="container">
           <div className="mission-grid">
             <div className="mission-card glass-card reveal">
-              <div className="mission-icon">🎯</div>
+              <div className="mission-icon"></div>
               <h3>Our Mission</h3>
               <p>To empower organizations across every sector with accessible, powerful, and innovative geospatial solutions — making spatial intelligence a strategic advantage for all.</p>
             </div>
             <div className="mission-card glass-card reveal">
-              <div className="mission-icon">🔭</div>
+              <div className="mission-icon"></div>
               <h3>Our Vision</h3>
               <p>A world where every organization, regardless of size, can harness the transformative power of geospatial technology to make smarter, faster, and more impactful decisions.</p>
             </div>
             <div className="mission-card glass-card reveal">
-              <div className="mission-icon">🌐</div>
+              <div className="mission-icon"></div>
               <h3>Our Approach</h3>
               <p>We combine deep GIS domain expertise with modern software engineering principles — delivering elegant, scalable, and user-centric spatial applications built on open standards.</p>
             </div>
@@ -82,7 +106,7 @@ export default function About() {
       </section>
 
       {/* Timeline */}
-      <section className="section timeline-section" style={{ position: 'relative' }}>
+      {/* <section className="section timeline-section" style={{ position: 'relative' }}>
         <div className="dot-grid-bg" style={{ opacity: 0.4 }} />
         <div className="container">
           <div className="section-header reveal" style={{ textAlign: 'center' }}>
@@ -103,7 +127,7 @@ export default function About() {
             <div className="timeline-line" />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values */}
       <section className="section">
@@ -129,9 +153,8 @@ export default function About() {
         <div className="glow-orb glow-orb-purple" style={{ width: 400, height: 400, bottom: 0, right: '-5%', opacity: 0.2 }} />
         <div className="container">
           <div className="section-header reveal">
-            <div className="section-tag">The People Behind the Maps</div>
-            <h2 className="section-title">Meet the <span className="text-gradient">Team</span></h2>
-            <p className="section-desc">Passionate geospatial technologists committed to building spatial solutions that matter.</p>
+            <div className="section-tag">Founders</div>
+            <h2 className="section-title">Meet our <span className="text-gradient">Founders</span></h2>
           </div>
           <div className="team-grid">
             {TEAM.map((member, i) => (
@@ -151,25 +174,25 @@ export default function About() {
         <div className="container">
           <div className="location-card glass-card reveal">
             <div className="location-info">
-              <div className="section-tag">Find Us</div>
+              {/* <div className="section-tag">Find Us</div> */}
               <h2 className="section-title">Our <span className="text-gradient">Office</span></h2>
               <div className="location-details">
                 <div className="location-item">
-                  <span className="location-icon">📍</span>
+                  <span className="location-icon"></span>
                   <div>
                     <strong>Address</strong>
                     <p>Plot No: 92 Vishnu Priya Nagar,<br />Pragathi Nagar, Nizampet,<br />Hyderabad, Telangana 500090</p>
                   </div>
                 </div>
                 <div className="location-item">
-                  <span className="location-icon">✉️</span>
+                  <span className="location-icon"></span>
                   <div>
                     <strong>Email</strong>
                     <p><a href="mailto:team@wheresoft.in">team@wheresoft.in</a></p>
                   </div>
                 </div>
                 <div className="location-item">
-                  <span className="location-icon">📞</span>
+                  <span className="location-icon"></span>
                   <div>
                     <strong>Phone</strong>
                     <p><a href="tel:+914049501950">+91 4049501950</a></p>
@@ -178,23 +201,55 @@ export default function About() {
               </div>
               <Link to="/contact" className="btn btn-primary">Get in Touch</Link>
             </div>
-            <div className="location-coords">
-              <div className="coord-card">
-                <div className="coord-label">LATITUDE</div>
-                <div className="coord-value">17.5042° N</div>
-              </div>
-              <div className="coord-card">
-                <div className="coord-label">LONGITUDE</div>
-                <div className="coord-value">78.3760° E</div>
-              </div>
-              <div className="coord-card">
-                <div className="coord-label">TIMEZONE</div>
-                <div className="coord-value">IST (UTC+5:30)</div>
-              </div>
-              <div className="coord-card">
-                <div className="coord-label">CITY</div>
-                <div className="coord-value">Hyderabad, IN</div>
-              </div>
+            <div className="about-map-wrapper">
+              <MapContainer
+                center={[OFFICE.lat, OFFICE.lng]}
+                zoom={3}
+                className="about-map"
+                scrollWheelZoom={true}
+                zoomControl={true}
+              >
+                <LayersControl position="topright">
+                  <LayersControl.BaseLayer checked name="Google Maps (Street)">
+                    <TileLayer
+                      url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+                      attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+                    />
+                  </LayersControl.BaseLayer>
+                  <LayersControl.BaseLayer name="Google Maps (Satellite)">
+                    <TileLayer
+                      url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                      attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a>'
+                    />
+                  </LayersControl.BaseLayer>
+                  <LayersControl.BaseLayer name="Esri World Street Map">
+                    <TileLayer
+                      url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+                      attribution='Tiles &copy; Esri'
+                    />
+                  </LayersControl.BaseLayer>
+                  <LayersControl.BaseLayer name="OpenStreetMap">
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                  </LayersControl.BaseLayer>
+                </LayersControl>
+                <Marker position={[OFFICE.lat, OFFICE.lng]} icon={customIcon}>
+                  <Popup>
+                    WhereSoft Office
+                  </Popup>
+                </Marker>
+              </MapContainer>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${OFFICE.lat},${OFFICE.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="map-direction-btn"
+                title="Get Directions on Google Maps"
+              >
+                <Navigation size={20} />
+              </a>
             </div>
           </div>
         </div>

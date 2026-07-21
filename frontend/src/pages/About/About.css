@@ -146,7 +146,7 @@
   padding: 48px;
   border-radius: var(--radius-xl);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2.9fr;
   gap: 64px;
   align-items: center;
 }
@@ -180,33 +180,29 @@
 
 .location-item a:hover { color: var(--accent-cyan); }
 
-.location-coords {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+.about-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.coord-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 20px;
+.about-map {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
-.coord-label {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.coord-value {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--accent-cyan);
+/* Map override for light theme */
+.about-map .leaflet-container {
+  background: #f9f9f9;
 }
 
 @media (max-width: 1024px) {

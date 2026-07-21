@@ -5,61 +5,61 @@ import './Services.css';
 const SERVICES = [
   {
     id: 'gis-consulting',
-    icon: '🗺️',
-    title: 'GIS Consulting',
-    tagline: 'Strategic spatial intelligence for informed decisions',
+    icon: '',
+    title: 'Consulting',
+    tagline: '',
     desc: 'Our GIS consulting services help organizations develop geospatial roadmaps, evaluate technology stacks, design spatial databases, and establish GIS governance frameworks. We bring decades of combined domain knowledge to guide your journey from concept to implementation.',
     features: ['Geospatial needs assessment', 'Technology stack evaluation', 'Spatial database design', 'GIS governance frameworks', 'Capacity building & training', 'Standards compliance (OGC, ISO)'],
     color: 'cyan',
   },
   {
     id: 'web-gis',
-    icon: '🌐',
-    title: 'Web GIS Development',
+    icon: '',
+    title: 'Custom Software Development',
     tagline: 'Browser-based mapping that scales with your mission',
     desc: 'We design and build custom web GIS applications using modern open standards — from lightweight map viewers to full-featured geospatial platforms with real-time data integration, multi-user collaboration, and advanced query capabilities.',
     features: ['Custom map application development', 'Leaflet.js & OpenLayers integration', 'GeoServer & MapServer deployment', 'RESTful & OGC API services', 'Real-time data streaming (WebSocket)', 'Mobile-responsive geospatial apps'],
     color: 'purple',
   },
-  {
-    id: 'remote-sensing',
-    icon: '🛰️',
-    title: 'Remote Sensing & Image Analysis',
-    tagline: 'Extracting intelligence from satellite and aerial data',
-    desc: 'Our remote sensing experts process multispectral, hyperspectral, LiDAR, and SAR datasets to deliver actionable geospatial intelligence. From land use classification to change detection and precision agriculture, we turn raw imagery into decisions.',
-    features: ['Satellite imagery processing', 'Land use / land cover classification', 'Vegetation & crop health analysis', 'Change detection & monitoring', 'SAR & LiDAR data processing', 'AI-powered feature extraction'],
-    color: 'green',
-  },
+  // {
+  //   id: 'remote-sensing',
+  //   icon: '🛰️',
+  //   title: 'Remote Sensing & Image Analysis',
+  //   tagline: 'Extracting intelligence from satellite and aerial data',
+  //   desc: 'Our remote sensing experts process multispectral, hyperspectral, LiDAR, and SAR datasets to deliver actionable geospatial intelligence. From land use classification to change detection and precision agriculture, we turn raw imagery into decisions.',
+  //   features: ['Satellite imagery processing', 'Land use / land cover classification', 'Vegetation & crop health analysis', 'Change detection & monitoring', 'SAR & LiDAR data processing', 'AI-powered feature extraction'],
+  //   color: 'green',
+  // },
   {
     id: 'spatial-analytics',
-    icon: '📊',
+    icon: '',
     title: 'Spatial Analytics',
     tagline: 'Location intelligence that drives competitive advantage',
     desc: 'We deliver deep spatial analytics including hotspot analysis, network routing, suitability modeling, predictive spatial modeling, and geospatial data science pipelines. Our Python and R-based workflows integrate seamlessly with your existing data ecosystem.',
     features: ['Hotspot & clustering analysis', 'Network analysis & routing', 'Suitability & site selection modeling', 'Predictive spatial modeling', 'Python/R geospatial pipelines', 'Business intelligence integration'],
     color: 'amber',
   },
-  {
-    id: '3d-viz',
-    icon: '🏙️',
-    title: '3D Visualization',
-    tagline: 'Bringing spatial data to life in three dimensions',
-    desc: 'From textured 3D terrain models to dynamic urban digital scenes, our 3D visualization services create immersive spatial experiences for stakeholder presentations, planning simulations, and public engagement.',
-    features: ['3D terrain modeling & DEM processing', 'CityGML & urban 3D modeling', 'WebGL-based 3D map rendering', 'Drone data & photogrammetry', 'Virtual flythrough animations', 'Cesium.js & Three.js integration'],
-    color: 'purple',
-  },
-  {
-    id: 'digital-twin',
-    icon: '🔮',
-    title: 'Digital Twin Solutions',
-    tagline: 'Real-time virtual mirrors of the physical world',
-    desc: 'We build geospatial digital twins that synchronize with real-world sensor data, enabling organizations to simulate, monitor, and optimize physical environments in real time — from smart city infrastructure to industrial facilities.',
-    features: ['IoT sensor data integration', 'Real-time geospatial synchronization', 'Simulation & scenario modeling', 'Smart city infrastructure twins', 'Environmental monitoring twins', 'Predictive maintenance analytics'],
-    color: 'cyan',
-  },
+  // {
+  //   id: '3d-viz',
+  //   icon: '🏙️',
+  //   title: '3D Visualization',
+  //   tagline: 'Bringing spatial data to life in three dimensions',
+  //   desc: 'From textured 3D terrain models to dynamic urban digital scenes, our 3D visualization services create immersive spatial experiences for stakeholder presentations, planning simulations, and public engagement.',
+  //   features: ['3D terrain modeling & DEM processing', 'CityGML & urban 3D modeling', 'WebGL-based 3D map rendering', 'Drone data & photogrammetry', 'Virtual flythrough animations', 'Cesium.js & Three.js integration'],
+  //   color: 'purple',
+  // },
+  // {
+  //   id: 'digital-twin',
+  //   icon: '',
+  //   title: 'Digital Twin Solutions',
+  //   tagline: 'Real-time virtual mirrors of the physical world',
+  //   desc: 'We build geospatial digital twins that synchronize with real-world sensor data, enabling organizations to simulate, monitor, and optimize physical environments in real time — from smart city infrastructure to industrial facilities.',
+  //   features: ['IoT sensor data integration', 'Real-time geospatial synchronization', 'Simulation & scenario modeling', 'Smart city infrastructure twins', 'Environmental monitoring twins', 'Predictive maintenance analytics'],
+  //   color: 'cyan',
+  // },
   {
     id: 'data-integration',
-    icon: '🔗',
+    icon: '',
     title: 'Data Integration & ETL',
     tagline: 'Unifying multi-source geospatial data at scale',
     desc: 'Our data engineering team builds robust spatial ETL pipelines that ingest, transform, and harmonize geospatial data from diverse sources — GPS, IoT sensors, open data portals, government databases, and commercial data providers.',
@@ -68,8 +68,8 @@ const SERVICES = [
   },
   {
     id: 'training',
-    icon: '🎓',
-    title: 'Training & Capacity Building',
+    icon: '',
+    title: 'Training',
     tagline: 'Empowering your team with geospatial skills',
     desc: 'We offer tailored GIS training programs — from introductory QGIS workshops to advanced web GIS development courses. Our hands-on curriculum is designed for government officers, field teams, analysts, and developers.',
     features: ['QGIS & ArcGIS training', 'Web GIS development workshops', 'Remote sensing & image analysis', 'Python for geospatial analysis', 'Custom curriculum design', 'On-site & virtual delivery'],
@@ -78,11 +78,11 @@ const SERVICES = [
 ];
 
 const PROCESS = [
-  { step: '01', title: 'Discovery', desc: 'We start by deeply understanding your spatial data, workflows, and organizational goals.' },
-  { step: '02', title: 'Design', desc: 'Our team architects the optimal geospatial solution — from data models to UI wireframes.' },
-  { step: '03', title: 'Develop', desc: 'Agile, sprint-based development with regular demos and stakeholder feedback loops.' },
-  { step: '04', title: 'Deploy', desc: 'Production deployment with comprehensive documentation, training, and handover.' },
-  { step: '05', title: 'Support', desc: 'Ongoing maintenance, monitoring, feature additions, and capacity building.' },
+  { step: '', title: 'Discovery', desc: 'We start by deeply understanding your spatial data, workflows, and organizational goals.' },
+  { step: '', title: 'Design', desc: 'Our team architects the optimal geospatial solution — from data models to UI wireframes.' },
+  { step: '', title: 'Develop', desc: 'Agile, sprint-based development with regular demos and stakeholder feedback loops.' },
+  { step: '', title: 'Deploy', desc: 'Production deployment with comprehensive documentation, training, and handover.' },
+  { step: '', title: 'Support', desc: 'Ongoing maintenance, monitoring, feature additions, and capacity building.' },
 ];
 
 export default function Services() {
@@ -104,12 +104,12 @@ export default function Services() {
         <div className="glow-orb glow-orb-cyan" style={{ width: 500, height: 500, top: -150, right: -100, opacity: 0.15 }} />
         <div className="container">
           <div className="reveal">
-            <div className="section-tag">What We Offer</div>
+            {/* <div className="section-tag">What We Offer</div> */}
             <h1 className="services-hero-title">
-              End-to-End<br /><span className="text-gradient">Geospatial Services</span>
+              <span className="text-gradient">Services</span>
             </h1>
             <p className="services-hero-desc">
-              From strategic consulting to advanced software development and remote sensing analytics — 
+              From strategic consulting to advanced software development —
               WhereSoft delivers comprehensive geospatial solutions tailored to your needs.
             </p>
           </div>
@@ -151,11 +151,10 @@ export default function Services() {
         <div className="dot-grid-bg" style={{ opacity: 0.4 }} />
         <div className="container">
           <div className="section-header reveal" style={{ textAlign: 'center' }}>
-            <div className="section-tag">How We Work</div>
             <h2 className="section-title">Our Delivery <span className="text-gradient">Process</span></h2>
-            <p className="section-desc" style={{ margin: '0 auto' }}>
+            {/* <p className="section-desc" style={{ margin: '0 auto' }}>
               A proven, agile methodology refined across 50+ geospatial projects.
-            </p>
+            </p> */}
           </div>
           <div className="process-steps">
             {PROCESS.map((p, i) => (

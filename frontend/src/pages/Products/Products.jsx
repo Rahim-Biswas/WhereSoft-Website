@@ -4,11 +4,11 @@ import './Products.css';
 
 const PRODUCTS = [
   {
-    id: 'wheremap',
-    name: 'WhereMap',
-    version: '2.0',
-    tagline: 'The Web GIS Platform for Modern Teams',
-    desc: 'WhereMap is WhereSoft\'s flagship web mapping platform — a powerful, browser-first GIS that allows organizations to publish, visualize, and analyze spatial data without GIS expertise on the user side.',
+    id: 'whereone',
+    name: 'WhereOne',
+    version: '1.0',
+    tagline: 'The Web GIS Platform for Geospatial Data Analysis and Processing',
+    desc: 'WhereOne is WhereSoft\'s flagship web mapping platform — a powerful, browser-first GIS that allows organizations to publish, visualize, and analyze spatial data without GIS expertise on the user side.',
     features: [
       'Multi-layer map canvas with drag-and-drop layers',
       'Vector and raster data visualization',
@@ -24,69 +24,27 @@ const PRODUCTS = [
     icon: '🗺️',
     status: 'Available Now',
   },
-  {
-    id: 'wheresight',
-    name: 'WhereSight',
-    version: '1.5',
-    tagline: 'Satellite Imagery Analytics Suite',
-    desc: 'WhereSight brings the power of remote sensing analytics to your browser. Process and analyze satellite imagery, generate indices (NDVI, NDWI), run change detection, and deliver insights — all without leaving your browser.',
-    features: [
-      'Multi-temporal satellite image comparison',
-      'Spectral index computation (NDVI, NDWI, SAVI, EVI)',
-      'Land use / land cover classification',
-      'Change detection & monitoring alerts',
-      'Cloud mask filtering',
-      'Export processed rasters (GeoTIFF, COG)',
-      'API access for automation',
-      'Dashboard with analytics visualizations',
-    ],
-    badge: 'Remote Sensing',
-    badgeColor: 'green',
-    icon: '🛰️',
-    status: 'Available Now',
-  },
-  {
-    id: 'wheretrack',
-    name: 'WhereTrack',
-    version: '1.0',
-    tagline: 'Real-Time Asset Tracking & Fleet Management',
-    desc: 'WhereTrack is a GPS-based real-time tracking platform for field assets, vehicles, and personnel. Monitor locations, set geofences, generate route reports, and integrate with IoT sensors from a unified map interface.',
-    features: [
-      'Real-time GPS tracking on live map',
-      'Geofence alerts & notifications',
-      'Historical route playback',
-      'Fleet analytics & utilization reports',
-      'IoT sensor integration (temperature, fuel)',
-      'Mobile app for field teams',
-      'REST API for integration',
-      'Multi-tenant organization support',
-    ],
-    badge: 'Tracking & IoT',
-    badgeColor: 'amber',
-    icon: '📍',
-    status: 'Available Now',
-  },
-  {
-    id: 'whereplan',
-    name: 'WherePlan',
-    version: '0.9',
-    tagline: 'Collaborative Spatial Planning Tool',
-    desc: 'WherePlan enables multi-stakeholder spatial planning and collaboration — annotate maps, sketch planning zones, run suitability analyses, and share interactive planning documents with decision-makers.',
-    features: [
-      'Collaborative map annotation tools',
-      'Zone & polygon sketching',
-      'Multi-criteria suitability analysis',
-      'Planning document sharing',
-      'Comment & feedback on map features',
-      'Scenario comparison tools',
-      'Integration with WhereMap',
-      'Printable planning reports',
-    ],
-    badge: 'Planning & Collaboration',
-    badgeColor: 'purple',
-    icon: '📐',
-    status: 'Beta',
-  },
+  // {
+  //   id: 'wheresight',
+  //   name: 'WhereSight',
+  //   version: '1.0',
+  //   tagline: 'Satellite Imagery Analytics Suite',
+  //   desc: 'WhereSight brings the power of remote sensing analytics to your browser. Process and analyze satellite imagery, generate indices (NDVI, NDWI), run change detection, and deliver insights — all without leaving your browser.',
+  //   features: [
+  //     'Multi-temporal satellite image comparison',
+  //     'Spectral index computation (NDVI, NDWI, SAVI, EVI)',
+  //     'Land use / land cover classification',
+  //     'Change detection & monitoring alerts',
+  //     'Cloud mask filtering',
+  //     'Export processed rasters (GeoTIFF, COG)',
+  //     'API access for automation',
+  //     'Dashboard with analytics visualizations',
+  //   ],
+  //   badge: 'Remote Sensing',
+  //   badgeColor: 'green',
+  //   icon: '🛰️',
+  //   status: 'Available Now',
+  // },
 ];
 
 const COMPARISON = [
@@ -122,7 +80,7 @@ export default function Products() {
               Geospatial Software<br /><span className="text-gradient">Built to Perform</span>
             </h1>
             <p className="products-hero-desc">
-              Purpose-built geospatial products designed for real-world operational needs — 
+              Purpose-built geospatial products designed for real-world operational needs —
               from web mapping platforms to remote sensing analytics suites.
             </p>
           </div>
@@ -151,8 +109,8 @@ export default function Products() {
                   {p.features.map((f, fi) => (
                     <li key={fi} className="product-feature">
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2"/>
-                        <path d="M4 7l2 2 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                        <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2" />
+                        <path d="M4 7l2 2 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                       </svg>
                       {f}
                     </li>
@@ -169,7 +127,7 @@ export default function Products() {
       </section>
 
       {/* Comparison Table */}
-      <section className="section comparison-section" style={{ position: 'relative' }}>
+      {/* <section className="section comparison-section" style={{ position: 'relative' }}>
         <div className="dot-grid-bg" style={{ opacity: 0.3 }} />
         <div className="container">
           <div className="section-header reveal" style={{ textAlign: 'center' }}>
@@ -203,7 +161,7 @@ export default function Products() {
             </table>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA */}
       <section className="section">

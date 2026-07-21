@@ -18,11 +18,6 @@ export default function Admin() {
   const [formData, setFormData] = useState({});
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    if (!isAdmin) { navigate('/login'); return; }
-    loadAll();
-  }, [isAdmin]);
-
   const loadAll = async () => {
     try {
       const [statsR, jobsR, postsR, messagesR] = await Promise.all([
@@ -39,6 +34,11 @@ export default function Admin() {
       console.error('Failed to load admin data', err);
     }
   };
+
+  useEffect(() => {
+    if (!isAdmin) { navigate('/login'); return; }
+    loadAll();
+  }, [isAdmin]);
 
   const openModal = (type, data = {}) => {
     setModal(type);

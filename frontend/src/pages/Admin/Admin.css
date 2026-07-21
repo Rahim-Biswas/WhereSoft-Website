@@ -61,7 +61,7 @@
   position: relative;
 }
 
-.admin-nav-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+.admin-nav-item:hover { color: var(--text-primary); background: rgba(0,0,0,0.04); }
 
 .admin-nav-item.active {
   color: var(--accent-cyan);
@@ -237,7 +237,7 @@
 }
 
 .admin-table tr:last-child td { border-bottom: none; }
-.admin-table tr:hover td { background: rgba(255,255,255,0.02); }
+.admin-table tr:hover td { background: rgba(0,0,0,0.02); }
 .td-bold { font-weight: 500; }
 
 .admin-delete-btn {
@@ -321,7 +321,7 @@
   transition: var(--transition);
 }
 
-.modal-close:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+.modal-close:hover { color: var(--text-primary); background: rgba(0,0,0,0.06); }
 
 .admin-modal-body { padding: 24px; flex: 1; }
 
