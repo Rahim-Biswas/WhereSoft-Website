@@ -311,14 +311,14 @@ export default function Home() {
           </div>
 
           <div className="section-cta reveal">
-            <Link to="/services" className="view-all-link">View All Services</Link>
+            <Link to="/services" className="view-all-link">View All Services →</Link>
           </div>
         </div>
       </section>
 
 
 
-      {/* ── INDUSTRIES ── */}
+      {/* ── INDUSTRIES ──
       <section className="section industries-section">
         <div className="container">
           <div className="section-header reveal" style={{ textAlign: 'left' }}>
@@ -343,7 +343,7 @@ export default function Home() {
           </div>
 
         </div>
-      </section>
+      </section> */}
 
       {/* ── TESTIMONIALS ── */}
       {/* <section className="section testimonials-section" style={{ position: 'relative' }}>

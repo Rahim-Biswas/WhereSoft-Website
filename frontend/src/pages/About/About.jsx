@@ -45,10 +45,10 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { name: 'Amzad Ali Khan', role: 'Founder & CEO', initials: 'AK', specialty: '' },
-  { name: 'Shaik Mubeena', role: 'Co-Founder', initials: 'SM', specialty: '' },
-  //{ name: 'Aditya Reddy', role: 'Lead GIS Analyst', initials: 'AR', specialty: 'Spatial Analytics & QGIS' },
-  //{ name: 'Sneha Kulkarni', role: 'Remote Sensing Expert', initials: 'SK', specialty: 'Satellite Imagery & Machine Learning' },
+  { name: 'Amzad Ali Khan', role: 'Founder & CEO' },
+  { name: 'Shaik Mubeena', role: 'Co-Founder' },
+  { name: 'Aditya Reddy', role: 'Lead GIS Analyst' },
+  { name: 'Sneha Kulkarni', role: 'Remote Sensing Expert' },
 ];
 
 export default function About() {
@@ -70,7 +70,7 @@ export default function About() {
         <div className="glow-orb glow-orb-cyan" style={{ width: 500, height: 500, top: -100, right: -100, opacity: 0.2 }} />
         <div className="container">
           <div className="about-hero-content reveal">
-            <div className="section-tag">About WhereSoft</div>
+            {/* <div className="section-tag">About WhereSoft</div> */}
             <h1 className="about-hero-title">
               Spatial<br /><span className="text-gradient">Data Science</span>
             </h1>
@@ -133,7 +133,7 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="section-header reveal">
-            <div className="section-tag">What Drives Us</div>
+            {/* <div className="section-tag">What Drives Us</div> */}
             <h2 className="section-title">Our Core <span className="text-gradient">Values</span></h2>
           </div>
           <div className="values-grid">
@@ -148,21 +148,53 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="section team-section" style={{ position: 'relative' }}>
-        <div className="glow-orb glow-orb-purple" style={{ width: 400, height: 400, bottom: 0, right: '-5%', opacity: 0.2 }} />
+      {/* Founders / Team Section */}
+      <section className="section founders-section">
+        <div className="founders-grid-bg" />
         <div className="container">
-          <div className="section-header reveal">
-            <div className="section-tag">Founders</div>
-            <h2 className="section-title">Meet our <span className="text-gradient">Founders</span></h2>
+          <div className="founders-header reveal">
+            <h2 className="founders-title">
+              Meet <span className="founders-title-accent">our</span> founders
+            </h2>
+            <p className="founders-subtitle">
+              Our philosophy is simple; hire great people and give them the resources and support to do their best work.
+            </p>
+            <div className="founders-actions">
+              <Link to="/contact" className="btn-founder-outline">
+                <span className="play-icon-circle">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+                Book a demo
+              </Link>
+              <Link to="/contact" className="btn-founder-primary">
+                Get in touch
+              </Link>
+            </div>
           </div>
-          <div className="team-grid">
+
+          <div className="founders-grid reveal">
             {TEAM.map((member, i) => (
-              <div key={i} className="team-card card reveal">
-                <div className="team-avatar">{member.initials}</div>
-                <h4 className="team-name">{member.name}</h4>
-                <div className="team-role badge badge-cyan">{member.role}</div>
-                <p className="team-specialty">{member.specialty}</p>
+              <div key={i} className="founder-card">
+                <div className="founder-avatar-container">
+                  <svg
+                    className="founder-blank-avatar"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </div>
+                <div className="founder-info-box">
+                  <h4 className="founder-name">{member.name}</h4>
+                  <p className="founder-role">{member.role}</p>
+                </div>
               </div>
             ))}
           </div>

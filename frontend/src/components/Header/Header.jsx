@@ -43,7 +43,7 @@ const NAV_ITEMS = [
       {
         title: 'SECTORS WE SERVE',
         links: [
-          { label: 'Government & Defense', path: '/industries#government' },
+          { label: 'Government', path: '/industries#government' },
           { label: 'Urban Planning & Smart Cities', path: '/industries#urban' },
           { label: 'Agriculture & Forestry', path: '/industries#agriculture' },
           { label: 'Infrastructure & Utilities', path: '/industries#infrastructure' },
@@ -56,7 +56,6 @@ const NAV_ITEMS = [
           { label: 'Telecom & Networks', path: '/industries#telecom' },
           { label: 'Oil, Gas & Mining', path: '/industries#oil-gas' },
           { label: 'Transportation & Logistics', path: '/industries#transport' },
-          { label: 'Disaster Management', path: '/industries#disaster' },
           { label: 'Real Estate & Land Records', path: '/industries#real-estate' },
         ]
       }
@@ -180,23 +179,23 @@ export default function Header() {
                   </button>
                 </div>
               </div>
-            ) : (
-              <div className="auth-actions">
-                <Link
-                  to="/login"
-                  className="btn btn-ghost btn-sm !text-black/80 hover:!text-black hover:bg-black/5 transition-colors duration-200"
-                >
-                  Sign In
-                </Link>
+              // ) : (
+              //   <div className="auth-actions">
+              //     <Link
+              //       to="/login"
+              //       className="btn btn-ghost btn-sm !text-black/80 hover:!text-black hover:bg-black/5 transition-colors duration-200"
+              //     >
+              //       Sign In
+              //     </Link>
 
-                <Link
-                  to="/signup"
-                  className="btn btn-primary btn-sm transition-all duration-200 hover:bg-primary-focus hover:-translate-y-0.5 hover:shadow-sm"
-                >
-                  Create a Free Account
-                </Link>
-              </div>
-            )}
+              //     <Link
+              //       to="/signup"
+              //       className="btn btn-primary btn-sm transition-all duration-200 hover:bg-primary-focus hover:-translate-y-0.5 hover:shadow-sm"
+              //     >
+              //       Create a Free Account
+              //     </Link>
+              //   </div>
+            ) : null} {/*to show the Sign In and Register button uncomment this and below link part*/}
 
             <button
               className="mobile-toggle"
@@ -296,12 +295,12 @@ export default function Header() {
                 {isAdmin && <Link to="/admin" className="btn btn-ghost" onClick={() => setMobileOpen(false)}>Admin</Link>}
                 <button className="btn btn-outline" onClick={() => { handleLogout(); setMobileOpen(false); }}>Sign Out</button>
               </>
-            ) : (
-              <>
-                <Link to="/login" className="btn btn-ghost" onClick={() => setMobileOpen(false)}>Sign In</Link>
-                <Link to="/signup" className="btn btn-primary" onClick={() => setMobileOpen(false)}>Get Started</Link>
-              </>
-            )}
+              // ) : (
+              //   <>
+              //     <Link to="/login" className="btn btn-ghost" onClick={() => setMobileOpen(false)}>Sign In</Link>
+              //     <Link to="/signup" className="btn btn-primary" onClick={() => setMobileOpen(false)}>Get Started</Link>
+              //   </>
+            ) : null}
           </div>
         </nav>
       </div>
