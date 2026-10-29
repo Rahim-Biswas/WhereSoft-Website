@@ -88,7 +88,7 @@ const NAV_ITEMS = [
     }
   },
   { label: 'About', path: '/about', simple: true },
-  { label: 'Blog', path: '/blog', simple: true },
+  // { label: 'Blog', path: '/blog', simple: true },
   { label: 'Careers', path: '/careers', simple: true },
   { label: 'Contact', path: '/contact', simple: true },
 ];

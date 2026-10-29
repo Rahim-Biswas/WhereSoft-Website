@@ -36,12 +36,12 @@ const TIMELINE = [
 ];
 
 const VALUES = [
-  { icon: '🌍', title: 'Spatial First', desc: 'We believe location data is fundamental to understanding our world and making better decisions.' },
-  { icon: '💡', title: 'Innovation', desc: 'We relentlessly pursue new geospatial techniques and technologies to deliver greater value.' },
-  { icon: '🤝', title: 'Partnership', desc: 'We work alongside our clients as true partners in their geospatial journey — not just vendors.' },
-  { icon: '✨', title: 'Excellence', desc: 'We hold ourselves to the highest standards of technical quality and professional delivery.' },
-  { icon: '🔓', title: 'Openness', desc: 'We champion open standards and interoperability — empowering clients, not locking them in.' },
-  { icon: '🌱', title: 'Sustainability', desc: 'We apply geospatial intelligence to support environmental monitoring and sustainable development.' },
+  { icon: '', title: 'Spatial First', desc: 'We believe location data is fundamental to understanding our world and making better decisions.' },
+  { icon: '', title: 'Innovation', desc: 'We relentlessly pursue new geospatial techniques and technologies to deliver greater value.' },
+  { icon: '', title: 'Partnership', desc: 'We work alongside our clients as true partners in their geospatial journey — not just vendors.' },
+  { icon: '', title: 'Excellence', desc: 'We hold ourselves to the highest standards of technical quality and professional delivery.' },
+  { icon: '', title: 'Openness', desc: 'We champion open standards and interoperability — empowering clients, not locking them in.' },
+  { icon: '', title: 'Sustainability', desc: 'We apply geospatial intelligence to support environmental monitoring and sustainable development.' },
 ];
 
 const TEAM = [
@@ -149,7 +149,7 @@ export default function About() {
       </section>
 
       {/* Founders / Team Section */}
-      <section className="section founders-section">
+      {/* <section className="section founders-section">
         <div className="founders-grid-bg" />
         <div className="container">
           <div className="founders-header reveal">
@@ -199,7 +199,7 @@ export default function About() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Location */}
       <section className="section location-section">
