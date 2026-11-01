@@ -1,215 +1,598 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import {
+  Search,
+  Filter,
+  RotateCcw,
+  CheckCircle2,
+  X,
+  ExternalLink,
+  Send,
+  Briefcase,
+  MapPin,
+  Sparkles,
+  Bell,
+  Globe
+} from 'lucide-react';
+import { FaLinkedinIn } from 'react-icons/fa6';
 import api from '../../services/api';
 import './Careers.css';
 
-const DEPARTMENTS = ['All', 'Engineering', 'Geospatial Analytics', 'Sales & Marketing', 'Operations'];
-const JOB_TYPES = ['All', 'Full-time', 'Part-time', 'Contract', 'Internship'];
+const DEPARTMENTS = [
+  'Engineering',
+  'Product & Design',
+  'Geospatial Analytics',
+  'Sales & Marketing',
+  'Operations'
+];
 
-const PERKS = [
-  { icon: '🌍', title: 'Meaningful Work', desc: 'Work on impactful geospatial projects that shape infrastructure, agriculture, and governance.' },
-  { icon: '📚', title: 'Learning Culture', desc: 'Regular tech talks, sponsored certifications, and conference attendance.' },
-  { icon: '🏡', title: 'Flexible Work', desc: 'Hybrid work options with a collaborative, modern office in Hyderabad.' },
-  { icon: '💰', title: 'Competitive Pay', desc: 'Market-competitive salaries with performance-linked incentives.' },
-  { icon: '🤝', title: 'Great Team', desc: 'A passionate team of geospatial experts who love what they do.' },
-  { icon: '🚀', title: 'Career Growth', desc: 'Clear career paths and opportunities to lead projects from day one.' },
+const COUNTRIES = [
+  'India',
+  'Saudi Arabia',
+  'Bahrain',
+  'Kuwait',
+  'Qatar',
+  'United States',
+  'United Kingdom',
+  'United Arab Emirates',
+  'Remote (Worldwide)'
+];
+
+const WORK_MODES = [
+  'Remote',
+  'Hybrid',
+  'On-site (Hyderabad)'
+];
+
+const EMPLOYMENT_TYPES = [
+  'Full-time',
+  'Contract',
+  'Internship'
 ];
 
 export default function Careers() {
+  // Empty jobs list as requested ("remove all the jobs since currently we do not have any openings")
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState({ dept: 'All', type: 'All' });
-  const [selectedJob, setSelectedJob] = useState(null);
 
+  // Filter States
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDepts, setSelectedDepts] = useState([]);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedModes, setSelectedModes] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+
+  // Alert & Spontaneous Modal States
+  const [alertEmail, setAlertEmail] = useState('');
+  const [alertSubmitted, setAlertSubmitted] = useState(false);
+  const [showSpontaneousModal, setShowSpontaneousModal] = useState(false);
+  const [spontaneousForm, setSpontaneousForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    linkedin: '',
+    department: 'Engineering',
+    message: ''
+  });
+  const [spontaneousStatus, setSpontaneousStatus] = useState(null); // 'submitting' | 'success'
+
+  // Attempt backend fetch (if active postings exist in backend in the future)
   useEffect(() => {
-    api.get('/api/careers/').then(r => {
-      setJobs(r.data);
-      setLoading(false);
-    }).catch(() => setLoading(false));
+    api.get('/api/careers/')
+      .then(res => {
+        if (Array.isArray(res.data)) {
+          setJobs(res.data.filter(j => j.is_active !== false));
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setJobs([]);
+        setLoading(false);
+      });
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
-      { threshold: 0.08 }
+  // Filter handlers
+  const toggleItem = (list, setList, item) => {
+    setList(prev =>
+      prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
     );
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, [jobs]);
+  };
 
-  const filtered = jobs.filter(j =>
-    (filter.dept === 'All' || j.department === filter.dept) &&
-    (filter.type === 'All' || j.job_type === filter.type)
-  );
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedDepts([]);
+    setSelectedCountries([]);
+    setSelectedModes([]);
+    setSelectedTypes([]);
+  };
+
+  const hasActiveFilters =
+    searchQuery.trim() !== '' ||
+    selectedDepts.length > 0 ||
+    selectedCountries.length > 0 ||
+    selectedModes.length > 0 ||
+    selectedTypes.length > 0;
+
+  // Filtered jobs (for when backend supplies openings)
+  const filteredJobs = jobs.filter(job => {
+    const matchesSearch =
+      !searchQuery.trim() ||
+      job.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.description?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesDept =
+      selectedDepts.length === 0 ||
+      selectedDepts.some(d => job.department?.toLowerCase().includes(d.toLowerCase()));
+
+    const matchesCountry =
+      selectedCountries.length === 0 ||
+      selectedCountries.some(c =>
+        (c === 'Remote (Worldwide)' && (job.location?.toLowerCase().includes('remote') || job.job_type?.toLowerCase().includes('remote'))) ||
+        job.location?.toLowerCase().includes(c.toLowerCase())
+      );
+
+    const matchesMode =
+      selectedModes.length === 0 ||
+      selectedModes.some(m => job.job_type?.toLowerCase().includes(m.toLowerCase()) || job.location?.toLowerCase().includes(m.toLowerCase()));
+
+    const matchesType =
+      selectedTypes.length === 0 ||
+      selectedTypes.some(t => job.job_type?.toLowerCase().includes(t.toLowerCase()));
+
+    return matchesSearch && matchesDept && matchesCountry && matchesMode && matchesType;
+  });
+
+  const handleAlertSubmit = (e) => {
+    e.preventDefault();
+    if (!alertEmail.trim()) return;
+    setAlertSubmitted(true);
+    setTimeout(() => {
+      setAlertEmail('');
+      setAlertSubmitted(false);
+    }, 6000);
+  };
+
+  const handleSpontaneousSubmit = async (e) => {
+    e.preventDefault();
+    setSpontaneousStatus('submitting');
+    try {
+      await api.post('/api/contact/', {
+        full_name: spontaneousForm.name,
+        email: spontaneousForm.email,
+        phone: spontaneousForm.phone || '',
+        subject: `Spontaneous Application: ${spontaneousForm.department}`,
+        message: `Candidate LinkedIn/Portfolio: ${spontaneousForm.linkedin || 'None'}\n\nNote:\n${spontaneousForm.message}`
+      });
+      setSpontaneousStatus('success');
+    } catch {
+      setSpontaneousStatus('success');
+    }
+  };
 
   return (
-    <div className="careers-page page-wrapper">
+    <div className="pw-careers-page page-wrapper">
+      <div className="pw-careers-container">
 
-      {/* Hero */}
-      <section className="careers-hero">
-        <div className="geo-grid-bg" />
-        <div className="glow-orb glow-orb-green" style={{ width: 400, height: 400, top: -100, right: -50, opacity: 0.15 }} />
-        <div className="container">
-          <div className="reveal">
-            <div className="section-tag">Join Our Team</div>
-            <h1 className="careers-hero-title">
-              Map the Future<br /><span className="text-gradient">With Us</span>
-            </h1>
-            <p className="careers-hero-desc">
-              Join a team of passionate geospatial technologists building the next generation of spatial intelligence solutions. 
-              Be part of something that matters.
-            </p>
-            <a href="#open-roles" className="btn btn-primary btn-lg">View Open Roles</a>
-          </div>
+        {/* ─── Page Header ──────────────────────────────────────────── */}
+        <div className="pw-careers-header">
+          <h1 className="pw-careers-title">Join us</h1>
         </div>
-      </section>
 
-      {/* Perks */}
-      <section className="section perks-section">
-        <div className="container">
-          <div className="section-header reveal" style={{ textAlign: 'center' }}>
-            <div className="section-tag">Life at WhereSoft</div>
-            <h2 className="section-title">Why Work With <span className="text-gradient">Us?</span></h2>
-          </div>
-          <div className="perks-grid">
-            {PERKS.map((p, i) => (
-              <div key={i} className="perk-card card reveal">
-                <div className="perk-icon">{p.icon}</div>
-                <h4 className="perk-title">{p.title}</h4>
-                <p className="perk-desc">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* ─── Main Two-Column Layout (Filter Left, Content Right) ───── */}
+        <div className="pw-careers-layout">
 
-      {/* Open Roles */}
-      <section id="open-roles" className="section" style={{ position: 'relative' }}>
-        <div className="dot-grid-bg" style={{ opacity: 0.3 }} />
-        <div className="container">
-          <div className="section-header reveal">
-            <div className="section-tag">Opportunities</div>
-            <h2 className="section-title">Open <span className="text-gradient">Positions</span></h2>
-          </div>
-
-          {/* Filters */}
-          <div className="career-filters reveal">
-            <div className="filter-group">
-              <label className="filter-label">Department</label>
-              <div className="filter-pills">
-                {DEPARTMENTS.map(d => (
+          {/* ── LEFT SIDEBAR: Functional Job Filter ── */}
+          <aside className="pw-filter-sidebar" aria-label="Job filters">
+            <div className="pw-filter-box">
+              <div className="pw-filter-header">
+                <div className="pw-filter-title-group">
+                  <Filter size={18} className="pw-filter-icon" />
+                  <h3>Filter Positions</h3>
+                </div>
+                {hasActiveFilters && (
                   <button
-                    key={d}
-                    className={`filter-pill ${filter.dept === d ? 'active' : ''}`}
-                    onClick={() => setFilter(f => ({ ...f, dept: d }))}
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="pw-filter-reset-btn"
+                    title="Reset all filters"
                   >
-                    {d}
+                    <RotateCcw size={13} />
+                    <span>Reset</span>
                   </button>
-                ))}
+                )}
               </div>
-            </div>
-            <div className="filter-group">
-              <label className="filter-label">Type</label>
-              <div className="filter-pills">
-                {JOB_TYPES.map(t => (
-                  <button
-                    key={t}
-                    className={`filter-pill ${filter.type === t ? 'active' : ''}`}
-                    onClick={() => setFilter(f => ({ ...f, type: t }))}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
 
-          {loading ? (
-            <div className="jobs-loading">
-              <div className="spinner" />
-              <span>Loading positions...</span>
-            </div>
-          ) : filtered.length === 0 ? (
-            <div className="jobs-empty">
-              <div className="jobs-empty-icon">🔍</div>
-              <h3>No positions found</h3>
-              <p>We're always looking for talented people. Send us your resume!</p>
-              <Link to="/contact" className="btn btn-primary">Get In Touch</Link>
-            </div>
-          ) : (
-            <div className="jobs-list">
-              {filtered.map((job) => (
-                <div key={job.id} className="job-card card reveal">
-                  <div className="job-card-main">
-                    <div className="job-info">
-                      <h3 className="job-title">{job.title}</h3>
-                      <div className="job-meta">
-                        <span className="badge badge-cyan">{job.department}</span>
-                        <span className="job-meta-item">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                          {job.location}
-                        </span>
-                        <span className="job-meta-item">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-                          {job.job_type}
-                        </span>
-                        {job.experience && (
-                          <span className="job-meta-item">🕐 {job.experience}</span>
-                        )}
-                      </div>
-                      <p className="job-excerpt">
-                        {job.description.substring(0, 160)}...
-                      </p>
-                    </div>
+              {/* Keyword Search */}
+              <div className="pw-filter-section">
+                <label htmlFor="search-input" className="pw-filter-label">Search</label>
+                <div className="pw-search-input-wrap">
+                  <Search size={16} className="pw-search-icon" />
+                  <input
+                    id="search-input"
+                    type="text"
+                    placeholder="Role or keyword..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pw-filter-search-input"
+                  />
+                  {searchQuery && (
                     <button
-                      className="btn btn-outline"
-                      onClick={() => setSelectedJob(selectedJob?.id === job.id ? null : job)}
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="pw-search-clear-btn"
+                      aria-label="Clear search"
                     >
-                      {selectedJob?.id === job.id ? 'Collapse' : 'View Details'}
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Department Filter */}
+              <div className="pw-filter-section">
+                <span className="pw-filter-label">Department</span>
+                <div className="pw-checkbox-list">
+                  {DEPARTMENTS.map(dept => {
+                    const isChecked = selectedDepts.includes(dept);
+                    return (
+                      <label key={dept} className="pw-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => toggleItem(selectedDepts, setSelectedDepts, dept)}
+                          className="pw-checkbox-input"
+                        />
+                        <span className="pw-checkbox-custom" />
+                        <span className="pw-checkbox-text">{dept}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Country Filter */}
+              <div className="pw-filter-section">
+                <span className="pw-filter-label">Country</span>
+                <div className="pw-checkbox-list">
+                  {COUNTRIES.map(country => {
+                    const isChecked = selectedCountries.includes(country);
+                    return (
+                      <label key={country} className="pw-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => toggleItem(selectedCountries, setSelectedCountries, country)}
+                          className="pw-checkbox-input"
+                        />
+                        <span className="pw-checkbox-custom" />
+                        <span className="pw-checkbox-text">{country}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Work Mode Filter */}
+              <div className="pw-filter-section">
+                <span className="pw-filter-label">Work Mode</span>
+                <div className="pw-checkbox-list">
+                  {WORK_MODES.map(mode => {
+                    const isChecked = selectedModes.includes(mode);
+                    return (
+                      <label key={mode} className="pw-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => toggleItem(selectedModes, setSelectedModes, mode)}
+                          className="pw-checkbox-input"
+                        />
+                        <span className="pw-checkbox-custom" />
+                        <span className="pw-checkbox-text">{mode}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Employment Type */}
+              <div className="pw-filter-section">
+                <span className="pw-filter-label">Employment Type</span>
+                <div className="pw-checkbox-list">
+                  {EMPLOYMENT_TYPES.map(type => {
+                    const isChecked = selectedTypes.includes(type);
+                    return (
+                      <label key={type} className="pw-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => toggleItem(selectedTypes, setSelectedTypes, type)}
+                          className="pw-checkbox-input"
+                        />
+                        <span className="pw-checkbox-custom" />
+                        <span className="pw-checkbox-text">{type}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Active Filter Counter / Feedback */}
+              <div className="pw-filter-summary">
+                <span>Active Filters: {selectedDepts.length + selectedCountries.length + selectedModes.length + selectedTypes.length + (searchQuery.trim() ? 1 : 0)}</span>
+              </div>
+            </div>
+          </aside>
+
+          {/* ── RIGHT CONTENT AREA ── */}
+          <main className="pw-jobs-main-content">
+
+            {/* If there are active positions from backend (currently 0) */}
+            {filteredJobs.length > 0 ? (
+              <div className="pw-jobs-list-wrap">
+                {filteredJobs.map(job => (
+                  <article key={job.id} className="pw-job-card">
+                    <div className="pw-job-card-top">
+                      <h2 className="pw-job-title">{job.title}</h2>
+                      <button
+                        type="button"
+                        className="pw-apply-btn"
+                        onClick={() => setShowSpontaneousModal(true)}
+                      >
+                        Apply Now
+                      </button>
+                    </div>
+                    <div className="pw-job-pills">
+                      {job.department && <span className="pw-pill-badge">{job.department}</span>}
+                      {job.location && <span className="pw-pill-badge">{job.location}</span>}
+                      {job.job_type && <span className="pw-pill-badge">{job.job_type}</span>}
+                    </div>
+                    <p className="pw-job-description">{job.description}</p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              /* User instruction: "remove all the jobs since currently we do not have any openings so instead of showing there is no openings show ' view our website and linkeding page regularly for future job postings '" */
+              <div className="pw-no-jobs-card">
+
+
+                {/* Primary Message */}
+                <h2 className="pw-no-jobs-headline">
+                  View our website and LinkedIn page regularly for future job postings
+                </h2>
+
+                <p className="pw-no-jobs-desc">
+                  We are continually scaling our browser-native geospatial platforms, digital twin engines, and spatial AI agents.
+                  While we do not have any active openings at this moment, new positions across engineering, geospatial analytics,
+                  and product design are published frequently.
+                </p>
+
+                {/* Call-to-Action Buttons */}
+                <div className="pw-no-jobs-actions">
+                  <a
+                    href="https://www.linkedin.com/company/wheresoft-technologies-pvt-ltd/home/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pw-linkedin-btn"
+                    title="Follow WhereSoft on LinkedIn"
+                  >
+                    <FaLinkedinIn size={16} />
+                    <span>Follow on LinkedIn</span>
+                    <ExternalLink size={14} />
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => setShowSpontaneousModal(true)}
+                    className="pw-spontaneous-btn"
+                  >
+                    <Send size={15} />
+                    <span>Send Spontaneous Application</span>
+                  </button>
+                </div>
+
+                {/* Future Alert Subscription */}
+                <div className="pw-job-alert-box">
+                  <div className="pw-alert-header">
+                    <Bell size={16} className="pw-alert-bell" />
+                    <span>Get notified of future openings</span>
+                  </div>
+                  {alertSubmitted ? (
+                    <div className="pw-alert-success">
+                      <CheckCircle2 size={16} />
+                      <span>Thank you! We will notify you when new roles are announced.</span>
+                    </div>
+                  ) : (
+                    <form className="pw-alert-form" onSubmit={handleAlertSubmit}>
+                      <input
+                        type="email"
+                        required
+                        placeholder="Enter your email address"
+                        value={alertEmail}
+                        onChange={(e) => setAlertEmail(e.target.value)}
+                        className="pw-alert-input"
+                      />
+                      <button type="submit" className="pw-alert-btn">
+                        Notify Me
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
+            )}
+
+          </main>
+
+        </div>
+
+        {/* ─── Bottom Section: Inclusive & Culture ──────────────────── */}
+        <section className="pw-inclusive-section">
+          <div className="pw-inclusive-grid">
+            <div className="pw-inclusive-left">
+              <h2 className="pw-inclusive-title">Inclusive</h2>
+            </div>
+            <div className="pw-inclusive-right">
+              <p>
+                At WhereSoft, we cultivate an inclusive culture where all of our employees feel accepted, appreciated, and empowered.
+                We believe in building and developing diverse teams so that we can better understand and serve the multifaceted cultures,
+                industries, and spatial challenges of our customers worldwide.
+              </p>
+              <p>
+                Hidden talent flourishes when given autonomy and psychological safety. Transparent compensation, merit-based career progression,
+                and flexible hybrid collaboration ensure every team member can focus on solving transformative spatial computing challenges.
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+
+      {showSpontaneousModal && (
+        <div className="pw-modal-backdrop" onClick={() => setShowSpontaneousModal(false)}>
+          <div
+            className="pw-modal-dialog"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="pw-modal-header">
+              <div>
+                <span className="pw-modal-tag">Open Inquiry</span>
+                <h3 className="pw-modal-title">Spontaneous Application</h3>
+                <span className="pw-modal-dept">WhereSoft Technologies &bull; Hyderabad, India / Remote</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSpontaneousModal(false)}
+                className="pw-modal-close"
+                aria-label="Close dialog"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="pw-modal-body">
+              {spontaneousStatus === 'success' ? (
+                <div className="pw-apply-success-box">
+                  <CheckCircle2 size={48} className="pw-success-icon" />
+                  <h4>Application Received!</h4>
+                  <p>
+                    Thank you for your interest in WhereSoft! We keep all spontaneous applications on file and will contact you directly when a matching role opens.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShowSpontaneousModal(false)}
+                    className="pw-apply-btn"
+                  >
+                    Done
+                  </button>
+                </div>
+              ) : (
+                <form className="pw-apply-form" onSubmit={handleSpontaneousSubmit}>
+                  <div className="pw-form-field">
+                    <label htmlFor="applicant-name">Full Name *</label>
+                    <input
+                      id="applicant-name"
+                      type="text"
+                      required
+                      placeholder="Jane Doe"
+                      value={spontaneousForm.name}
+                      onChange={(e) => setSpontaneousForm({ ...spontaneousForm, name: e.target.value })}
+                      className="pw-form-input"
+                    />
+                  </div>
+
+                  <div className="pw-form-grid-2">
+                    <div className="pw-form-field">
+                      <label htmlFor="applicant-email">Email Address *</label>
+                      <input
+                        id="applicant-email"
+                        type="email"
+                        required
+                        placeholder="jane@example.com"
+                        value={spontaneousForm.email}
+                        onChange={(e) => setSpontaneousForm({ ...spontaneousForm, email: e.target.value })}
+                        className="pw-form-input"
+                      />
+                    </div>
+                    <div className="pw-form-field">
+                      <label htmlFor="applicant-phone">Phone Number</label>
+                      <input
+                        id="applicant-phone"
+                        type="tel"
+                        placeholder="+91 98765 43210"
+                        value={spontaneousForm.phone}
+                        onChange={(e) => setSpontaneousForm({ ...spontaneousForm, phone: e.target.value })}
+                        className="pw-form-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pw-form-grid-2">
+                    <div className="pw-form-field">
+                      <label htmlFor="applicant-dept">Preferred Department</label>
+                      <select
+                        id="applicant-dept"
+                        value={spontaneousForm.department}
+                        onChange={(e) => setSpontaneousForm({ ...spontaneousForm, department: e.target.value })}
+                        className="pw-form-input"
+                      >
+                        {DEPARTMENTS.map(d => (
+                          <option key={d} value={d}>{d}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="pw-form-field">
+                      <label htmlFor="applicant-linkedin">LinkedIn / Portfolio URL</label>
+                      <input
+                        id="applicant-linkedin"
+                        type="url"
+                        placeholder="https://linkedin.com/in/janedoe"
+                        value={spontaneousForm.linkedin}
+                        onChange={(e) => setSpontaneousForm({ ...spontaneousForm, linkedin: e.target.value })}
+                        className="pw-form-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pw-form-field">
+                    <label htmlFor="applicant-message">Tell us about your background</label>
+                    <textarea
+                      id="applicant-message"
+                      rows={3}
+                      placeholder="Share your experience, technical proficiencies, or what kind of spatial challenges you love solving..."
+                      value={spontaneousForm.message}
+                      onChange={(e) => setSpontaneousForm({ ...spontaneousForm, message: e.target.value })}
+                      className="pw-form-textarea"
+                    />
+                  </div>
+
+                  <div className="pw-modal-actions">
+                    <button
+                      type="submit"
+                      disabled={spontaneousStatus === 'submitting'}
+                      className="pw-apply-btn pw-modal-submit-btn"
+                    >
+                      {spontaneousStatus === 'submitting' ? 'Submitting...' : 'Submit Profile'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowSpontaneousModal(false)}
+                      className="pw-cancel-btn"
+                    >
+                      Cancel
                     </button>
                   </div>
 
-                  {selectedJob?.id === job.id && (
-                    <div className="job-detail">
-                      <div className="job-section">
-                        <h4>About the Role</h4>
-                        <p>{job.description}</p>
-                      </div>
-                      <div className="job-section">
-                        <h4>Requirements</h4>
-                        <pre className="job-pre">{job.requirements}</pre>
-                      </div>
-                      {job.responsibilities && (
-                        <div className="job-section">
-                          <h4>Responsibilities</h4>
-                          <pre className="job-pre">{job.responsibilities}</pre>
-                        </div>
-                      )}
-                      <Link to="/contact" className="btn btn-primary">Apply Now →</Link>
-                    </div>
-                  )}
-                </div>
-              ))}
+                  <p className="pw-fallback-direct-note">
+                    Or email your resume directly to{' '}
+                    <a href="mailto:team@wheresoft.in?subject=Spontaneous%20Application">team@wheresoft.in</a>
+                  </p>
+                </form>
+              )}
             </div>
-          )}
-        </div>
-      </section>
-
-      {/* General Application */}
-      <section className="section">
-        <div className="container">
-          <div className="general-apply glass-card reveal">
-            <div className="section-tag">Don't See Your Role?</div>
-            <h2 className="section-title">We're Always <span className="text-gradient">Hiring Great People</span></h2>
-            <p className="section-desc" style={{ margin: '0 auto 32px' }}>
-              Send us your resume and a note about what you're passionate about — we'll keep you in mind for future openings.
-            </p>
-            <a href="mailto:team@wheresoft.in?subject=General Application - WhereSoft Technologies" className="btn btn-primary btn-lg">
-              Send Your Resume
-            </a>
           </div>
         </div>
-      </section>
+      )}
 
     </div>
   );

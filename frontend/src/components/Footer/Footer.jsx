@@ -57,7 +57,7 @@ export default function Footer() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.01 2.18C0 1.08.86.1 1.96.01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
                 </svg>
-                +91 4049501950
+                +91 6309871347
               </a>
               <div className="footer-contact-item">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -74,9 +74,6 @@ export default function Footer() {
               </a>
               <a href="https://www.instagram.com/wheresoft.technologies/" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FaInstagram size={20} />
-              </a>
-              <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaYoutube size={20} />
               </a>
             </div>
           </div>
@@ -104,10 +101,7 @@ export default function Footer() {
           <div className="footer-copy">
             © {new Date().getFullYear()} WhereSoft Technologies Private Limited. All rights reserved.
           </div>
-          <div className="footer-coords">
-            <span className="footer-coord-label">Location</span>
-            <span>17.532028009614812°N, 78.38881943307665°E · Hyderabad, India</span>
-          </div>
+
           <div className="footer-bottom-links">
             <Link to="/privacy" className="footer-bottom-link">Privacy Policy</Link>
             <Link to="/terms" className="footer-bottom-link">Terms of Service</Link>

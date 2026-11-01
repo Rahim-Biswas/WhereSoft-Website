@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Eye, FileText } from 'lucide-react';
 import api from '../../services/api';
 import './Blog.css';
 
@@ -48,7 +49,9 @@ export default function Blog() {
             {selected.category && <span className="badge badge-cyan">{selected.category}</span>}
             <span className="post-date">{new Date(selected.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
             <span className="post-author">By {selected.author}</span>
-            <span className="post-views">👁 {selected.views} views</span>
+            <span className="post-views" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+              <Eye size={14} /> {selected.views} views
+            </span>
           </div>
           <h1 className="post-title">{selected.title}</h1>
           {selected.excerpt && <p className="post-excerpt">{selected.excerpt}</p>}
@@ -115,7 +118,9 @@ export default function Blog() {
             </div>
           ) : filtered.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '64px' }}>
-              <div style={{ fontSize: '3rem', marginBottom: 16 }}>📝</div>
+              <div style={{ color: 'var(--accent-purple)', marginBottom: 16 }}>
+                <FileText size={40} />
+              </div>
               <h3>No posts in this category yet.</h3>
               <p style={{ color: 'var(--text-secondary)', marginTop: 8 }}>Check back soon!</p>
             </div>

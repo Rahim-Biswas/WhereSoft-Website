@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Target, Zap, Shield, Globe } from 'lucide-react';
+import { Target, Zap, Shield, Globe, ArrowRight } from 'lucide-react';
 import GridDistortion from '../../components/GridDistortion/GridDistortion';
 import bg1 from '../../assets/bg_1.webp';
 import bg2 from '../../assets/bg_2.webp';
@@ -56,70 +56,52 @@ const FLOWING_INDUSTRIES = [
 
 const SERVICES = [
   {
-    icon: '',
     title: 'Custom Software Development',
     desc: 'Custom browser-based mapping applications with real-time data integration.',
     color: 'purple',
     path: '/services#web-gis',
     image: developmentImg,
-    borderColor: '#000000ff',
-    gradient: 'linear-gradient(180deg, rgba(124,111,255,0.15), transparent)',
-    handle: ''
+    borderColor: 'var(--accent-purple)',
   },
   {
-    icon: '',
     title: 'Spatial Analytics',
-    desc: 'Location-based analysis & predictive modeling.',
+    desc: 'Location-based intelligence, predictive spatial modeling & spatial SQL.',
     color: 'amber',
     path: '/services#spatial-analytics',
     image: gisAnalysisImg,
-    borderColor: '#000000ff',
-    gradient: 'linear-gradient(180deg, rgba(255,176,32,0.15), transparent)',
-    handle: ''
+    borderColor: 'var(--accent-amber)',
   },
   {
-    icon: '',
     title: 'Custom Geospatial Tool Development',
     desc: 'We build custom scripts and plugins to automate data processing tasks.',
     color: 'cyan',
     path: '/services#digital-twin',
     image: customToolImg,
-    borderColor: '#000000ff',
-    gradient: 'linear-gradient(180deg, rgba(0,212,255,0.15), transparent)',
-    handle: ''
+    borderColor: 'var(--accent-cyan)',
   },
   {
-    icon: '',
     title: 'Drone Data Acquisition & Processing',
     desc: 'Partner with certified Drone Service Providers to collect & process drone data.',
     color: 'purple',
     path: '/services#3d-viz',
     image: droneDataCollectionImg,
-    borderColor: '#000000ff',
-    gradient: 'linear-gradient(145deg, rgba(124,111,255,0.15), transparent)',
-    handle: ''
+    borderColor: 'var(--accent-purple)',
   },
   {
-    icon: '',
-    title: 'Consulting',
+    title: 'GIS Consulting',
     desc: 'Expert geospatial strategy, system design, and implementation advisory.',
     color: 'cyan',
     path: '/services#gis-consulting',
     image: consultImg,
-    borderColor: '#000000ff',
-    gradient: 'linear-gradient(145deg, rgba(0,212,255,0.15), transparent)',
-    handle: ''
+    borderColor: 'var(--accent-cyan)',
   },
   {
-    icon: '',
-    title: 'Training',
-    desc: 'We explain how to use advanced geospatial technologies.',
+    title: 'Training & Support',
+    desc: 'Upskilling engineering and analyst teams with modern GIS technologies.',
     color: 'green',
     path: '/services#training',
     image: trainingImg,
-    borderColor: '#000000ff',
-    gradient: 'linear-gradient(145deg, rgba(0,232,135,0.15), transparent)',
-    handle: ''
+    borderColor: 'var(--accent-green)',
   },
 ];
 
@@ -295,15 +277,15 @@ export default function Home() {
 
           <div className="grid grid-3 gap-6" style={{ position: 'relative', marginTop: '3rem' }}>
             {SERVICES.map((s, idx) => (
-              <Link to={s.path} key={idx} className="card" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0', borderTop: `4px solid ${s.borderColor}` }}>
+              <Link to={s.path} key={idx} className="card home-service-card" style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '0', borderTop: `3px solid ${s.borderColor}` }}>
                 <div style={{ width: '100%', height: '220px', overflow: 'hidden' }}>
-                  <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} className="service-card-img" />
                 </div>
                 <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                  <h3 style={{ fontSize: '1.25rem', marginBottom: '12px', color: 'var(--text-primary)', fontWeight: '600' }}>{s.title}</h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', flex: 1 }}>{s.desc}</p>
-                  <div style={{ marginTop: '20px', color: s.borderColor, fontSize: '0.85rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    Learn more →
+                  <h3 style={{ fontSize: '1.2rem', marginBottom: '10px', color: 'var(--text-primary)', fontWeight: '700' }}>{s.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: '1.6', flex: 1 }}>{s.desc}</p>
+                  <div style={{ marginTop: '20px', color: s.borderColor, fontSize: '0.88rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    Learn more <ArrowRight size={14} />
                   </div>
                 </div>
               </Link>

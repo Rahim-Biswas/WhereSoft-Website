@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Globe } from 'lucide-react';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -65,7 +66,7 @@ function Layout() {
           <Route path="*"          element={<NotFound />} />
         </Routes>
       </Suspense>
-      {!isAdmin && !isAuth && <Footer />}
+      {!isAdmin && !isAuth && !isContact && <Footer />}
     </>
   );
 }
@@ -77,7 +78,9 @@ function NotFound() {
       flexDirection: 'column', gap: 16, textAlign: 'center', padding: 24,
       background: 'var(--bg-primary)', paddingTop: 'var(--header-height)'
     }}>
-      <div style={{ fontSize: '5rem' }}>🌍</div>
+      <div style={{ color: 'var(--accent-cyan)' }}>
+        <Globe size={64} />
+      </div>
       <h1 style={{ fontSize: '5rem', fontWeight: 700, background: 'var(--gradient-accent)',
         WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>404</h1>
       <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>

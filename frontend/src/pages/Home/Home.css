@@ -614,3 +614,16 @@
     padding: 40px 24px;
   }
 }
+
+.home-service-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.home-service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.home-service-card:hover .service-card-img {
+  transform: scale(1.05);
+}

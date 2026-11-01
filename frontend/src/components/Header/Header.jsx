@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import wheresoftLogo from '../../assets/wheresoft_logo.png';
+import whereone2dImg from '../../assets/images/whereone/whereone-2d-analysis-workspace.jpeg';
 import './Header.css';
 
 const NAV_ITEMS = [
@@ -75,16 +76,17 @@ const NAV_ITEMS = [
       {
         title: 'OUR PRODUCTS',
         links: [
-          { label: 'WhereOne', desc: 'Cloude-native web mapping platform', path: '/products#wherone' },
+          { label: 'WhereOne Platform', desc: 'Cloud-native hybrid GIS & digital twin', path: '/products#whereone' },
         ]
       }
     ],
     featured: {
       label: 'NEW PRODUCT',
       title: 'WhereOne',
-      desc: 'Next-generation web GIS platform with AI-powered spatial analysis built in.',
+      desc: 'Next-generation web GIS platform with Eon AI spatial agent and client-side processing.',
       cta: 'View Products',
-      path: '/products'
+      path: '/products',
+      image: whereone2dImg
     }
   },
   { label: 'About', path: '/about', simple: true },
@@ -243,28 +245,44 @@ export default function Header() {
               {item.featured && (
                 <div className="mega-featured">
                   <div className="mega-featured-tag">{item.featured.label}</div>
-                  <div className="mega-featured-map">
-                    <div className="mini-globe">
-                      <svg viewBox="0 0 200 200" width="100%" height="100%">
-                        <defs>
-                          <radialGradient id="globeGrad" cx="40%" cy="35%">
-                            <stop offset="0%" stopColor="#1a3a6e" />
-                            <stop offset="100%" stopColor="#0a0e1a" />
-                          </radialGradient>
-                        </defs>
-                        <circle cx="100" cy="100" r="90" fill="url(#globeGrad)" stroke="rgba(0,212,255,0.3)" strokeWidth="1" />
-                        <ellipse cx="100" cy="100" rx="40" ry="90" fill="none" stroke="rgba(0,212,255,0.15)" strokeWidth="1" />
-                        <ellipse cx="100" cy="100" rx="70" ry="90" fill="none" stroke="rgba(0,212,255,0.1)" strokeWidth="1" />
-                        <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(0,212,255,0.12)" strokeWidth="1" />
-                        <line x1="10" y1="70" x2="190" y2="70" stroke="rgba(0,212,255,0.08)" strokeWidth="0.5" />
-                        <line x1="10" y1="130" x2="190" y2="130" stroke="rgba(0,212,255,0.08)" strokeWidth="0.5" />
-                        <circle cx="117" cy="92" r="4" fill="#00D4FF" opacity="0.8" />
-                        <circle cx="117" cy="92" r="8" fill="none" stroke="#00D4FF" strokeWidth="1" opacity="0.4" />
-                        <circle cx="117" cy="92" r="14" fill="none" stroke="#00D4FF" strokeWidth="0.5" opacity="0.2" />
-                      </svg>
-                    </div>
-                  </div>
-                  <h4 className="mega-featured-title">{item.featured.title}</h4>
+                  <Link
+                    to={item.featured.path}
+                    className="mega-featured-map"
+                    onClick={() => setActiveMenu(null)}
+                  >
+                    {item.featured.image ? (
+                      <img
+                        src={item.featured.image}
+                        alt={item.featured.title}
+                        className="mega-featured-img"
+                      />
+                    ) : (
+                      <div className="mini-globe">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                          <defs>
+                            <radialGradient id="globeGrad" cx="40%" cy="35%">
+                              <stop offset="0%" stopColor="#1a3a6e" />
+                              <stop offset="100%" stopColor="#0a0e1a" />
+                            </radialGradient>
+                          </defs>
+                          <circle cx="100" cy="100" r="90" fill="url(#globeGrad)" stroke="rgba(0,212,255,0.3)" strokeWidth="1" />
+                          <ellipse cx="100" cy="100" rx="40" ry="90" fill="none" stroke="rgba(0,212,255,0.15)" strokeWidth="1" />
+                          <ellipse cx="100" cy="100" rx="70" ry="90" fill="none" stroke="rgba(0,212,255,0.1)" strokeWidth="1" />
+                          <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(0,212,255,0.12)" strokeWidth="1" />
+                          <line x1="10" y1="70" x2="190" y2="70" stroke="rgba(0,212,255,0.08)" strokeWidth="0.5" />
+                          <line x1="10" y1="130" x2="190" y2="130" stroke="rgba(0,212,255,0.08)" strokeWidth="0.5" />
+                          <circle cx="117" cy="92" r="4" fill="#00D4FF" opacity="0.8" />
+                          <circle cx="117" cy="92" r="8" fill="none" stroke="#00D4FF" strokeWidth="1" opacity="0.4" />
+                          <circle cx="117" cy="92" r="14" fill="none" stroke="#00D4FF" strokeWidth="0.5" opacity="0.2" />
+                        </svg>
+                      </div>
+                    )}
+                  </Link>
+                  <h4 className="mega-featured-title">
+                    <Link to={item.featured.path} onClick={() => setActiveMenu(null)}>
+                      {item.featured.title}
+                    </Link>
+                  </h4>
                   <p className="mega-featured-desc">{item.featured.desc}</p>
                   <Link to={item.featured.path} className="mega-featured-cta" onClick={() => setActiveMenu(null)}>
                     {item.featured.cta} →

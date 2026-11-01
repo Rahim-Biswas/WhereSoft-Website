@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Home } from 'lucide-react';
+import { ArrowLeft, Home, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import logoImg from '../../assets/wheresoft_logo.png';
 import bgImg from '../../assets/bg_4.webp';
@@ -47,7 +47,9 @@ export default function Signup() {
     return (
       <div className="auth-page">
         <div className="auth-right-panel" style={{ width: '100%', flexDirection: 'column' }}>
-          <div style={{ fontSize: '3rem', marginbottom: 16 }}>✅</div>
+          <div style={{ color: 'var(--accent-green)', marginBottom: 16 }}>
+            <CheckCircle2 size={54} />
+          </div>
           <h2>Account Created!</h2>
           <p style={{ color: '#94a3b8', marginTop: 8 }}>
             Redirecting you to sign in...

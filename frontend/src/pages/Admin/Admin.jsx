@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { BarChart2, Briefcase, FileText, Mail, Users, Phone, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 import './Admin.css';
@@ -116,8 +117,8 @@ export default function Admin() {
               className={`admin-nav-item ${tab === t ? 'active' : ''}`}
               onClick={() => setTab(t)}
             >
-              <span className="admin-nav-icon">
-                {t === 'Dashboard' ? '📊' : t === 'Careers' ? '💼' : t === 'Blog' ? '📝' : '✉️'}
+              <span className="admin-nav-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                {t === 'Dashboard' ? <BarChart2 size={16} /> : t === 'Careers' ? <Briefcase size={16} /> : t === 'Blog' ? <FileText size={16} /> : <Mail size={16} />}
               </span>
               {t}
               {t === 'Messages' && messages.filter(m => !m.is_read).length > 0 && (
@@ -153,13 +154,13 @@ export default function Admin() {
             <div>
               <div className="admin-stats">
                 {[
-                  { label: 'Total Users', value: stats.users.total, icon: '👥', color: 'cyan' },
-                  { label: 'Active Jobs', value: stats.jobs.active, icon: '💼', color: 'green' },
-                  { label: 'Published Posts', value: stats.posts.published, icon: '📝', color: 'purple' },
-                  { label: 'Unread Messages', value: stats.messages.unread, icon: '✉️', color: 'amber' },
+                  { label: 'Total Users', value: stats.users.total, icon: <Users size={22} />, color: 'cyan' },
+                  { label: 'Active Jobs', value: stats.jobs.active, icon: <Briefcase size={22} />, color: 'green' },
+                  { label: 'Published Posts', value: stats.posts.published, icon: <FileText size={22} />, color: 'purple' },
+                  { label: 'Unread Messages', value: stats.messages.unread, icon: <Mail size={22} />, color: 'amber' },
                 ].map((s, i) => (
                   <div key={i} className={`admin-stat-card stat-${s.color}`}>
-                    <div className="admin-stat-icon">{s.icon}</div>
+                    <div className="admin-stat-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{s.icon}</div>
                     <div className="admin-stat-value">{s.value}</div>
                     <div className="admin-stat-label">{s.label}</div>
                   </div>
@@ -281,7 +282,11 @@ export default function Admin() {
                       </div>
                     </div>
                     <p className="message-body">{m.message}</p>
-                    {m.phone && <p className="message-phone">📞 {m.phone}</p>}
+                    {m.phone && (
+                      <p className="message-phone" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <Phone size={14} /> {m.phone}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -297,7 +302,7 @@ export default function Admin() {
           <div className="admin-modal" onClick={e => e.stopPropagation()}>
             <div className="admin-modal-header">
               <h3>{formData.id ? 'Edit Job' : 'Add New Job'}</h3>
-              <button className="modal-close" onClick={closeModal}>✕</button>
+              <button className="modal-close" onClick={closeModal}><X size={18} /></button>
             </div>
             <div className="admin-modal-body">
               {[
@@ -357,7 +362,7 @@ export default function Admin() {
           <div className="admin-modal admin-modal-wide" onClick={e => e.stopPropagation()}>
             <div className="admin-modal-header">
               <h3>{formData.id ? 'Edit Post' : 'New Blog Post'}</h3>
-              <button className="modal-close" onClick={closeModal}>✕</button>
+              <button className="modal-close" onClick={closeModal}><X size={18} /></button>
             </div>
             <div className="admin-modal-body">
               <div className="form-group">
